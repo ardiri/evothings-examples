@@ -1,0 +1,3 @@
+create new mbed program from Hello World
+import libraries: BLE_API, nRF51822
+replace main.cpp with the file within this directory
