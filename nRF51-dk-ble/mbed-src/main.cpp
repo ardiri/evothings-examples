@@ -135,8 +135,7 @@ void onDataWritten(const GattWriteCallbackParams *context)
   } 
 }
 
-void onDisconnection(Gap::Handle_t handle, 
-                     Gap::DisconnectionReason_t disconnectReason) 
+void onDisconnection(const Gap::DisconnectionCallbackParams_t *params)  
 {
   INFO_NL(">> disconnected");
   ble.startAdvertising();
