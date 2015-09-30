@@ -6,7 +6,7 @@
 #define CONSOLE_LOG 
 
 #include "mbed.h"
-#include "BLEDevice.h"
+#include "BLE.h"
 
 //-------------------------------------------------------------------------
 
@@ -116,10 +116,7 @@ void onLedDataWritten(const uint8_t* value, uint8_t length)
 
 //-------------------------------------------------------------------------
 
-void onConnection(Gap::Handle_t handle,
-                  Gap::addr_type_t peerAddrType,
-                  const Gap::address_t peerAddr,
-                  const Gap::ConnectionParams_t * connectionParams) 
+void onConnection(const Gap::ConnectionCallbackParams_t *params) 
 {
   INFO_NL(">> connected");
 
@@ -128,10 +125,10 @@ void onConnection(Gap::Handle_t handle,
   onLedDataWritten(&led_value, 1); // force LED's to be in off state
 }
 
-void onDataWritten(const GattCharacteristicWriteCBParams *context) 
+void onDataWritten(const GattWriteCallbackParams *context)  
 {
   // was the characteristic being written to nRF51_GATT_CHAR_LED? 
-  if (context -> charHandle == 
+  if (context -> handle == 
       gatt_characteristics[CHARACTERISTIC_LED] -> getValueHandle())
   {
     onLedDataWritten(context -> data, context -> len);
